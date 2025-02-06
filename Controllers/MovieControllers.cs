@@ -69,8 +69,22 @@ namespace MovieFinder.Controllers
             var movies = _context.Movies.ToList();
             return View(movies);
         }
+
+        // 🎬 ✅ Remove Movie from Favorites (POST)
+        [HttpPost("RemoveMovie")]
+        public IActionResult RemoveMovie(string tmdbId)
+        {
+            var movie = _context.Movies.FirstOrDefault(m => m.TmdbId == tmdbId);
+            if (movie != null)
+            {
+                _context.Movies.Remove(movie);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Favorites");
+        }
     }
 }
+
 
 
 

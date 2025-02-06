@@ -13,7 +13,7 @@
                         <img src="@movie.PosterUrl" class="card-img-top" alt="@movie.Title">
                         <div class="card-body text-center">
                             <h5 class="card-title">@movie.Title (@movie.Year)</h5>
-                            <form asp-action="RemoveFavorite" method="post">
+                            <form asp-action="RemoveMovie" method="post">
                                 <input type="hidden" name="TmdbId" value="@movie.TmdbId">
                                 <button type="submit" class="btn btn-danger btn-sm w-100">Remove</button>
                             </form>
