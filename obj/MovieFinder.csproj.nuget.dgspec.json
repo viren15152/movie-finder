@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/viren/Desktop/movie-finder/MovieFinder/MovieFinder.csproj": {}
+    "/Users/viren/Desktop/movie-finder/MovieFinder.csproj": {}
   },
   "projects": {
-    "/Users/viren/Desktop/movie-finder/MovieFinder/MovieFinder.csproj": {
+    "/Users/viren/Desktop/movie-finder/MovieFinder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/viren/Desktop/movie-finder/MovieFinder/MovieFinder.csproj",
+        "projectUniqueName": "/Users/viren/Desktop/movie-finder/MovieFinder.csproj",
         "projectName": "MovieFinder",
-        "projectPath": "/Users/viren/Desktop/movie-finder/MovieFinder/MovieFinder.csproj",
+        "projectPath": "/Users/viren/Desktop/movie-finder/MovieFinder.csproj",
         "packagesPath": "/Users/viren/.nuget/packages/",
-        "outputPath": "/Users/viren/Desktop/movie-finder/MovieFinder/obj/",
+        "outputPath": "/Users/viren/Desktop/movie-finder/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/viren/.nuget/NuGet/NuGet.Config"
@@ -43,6 +43,32 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "dotenv.net": {
+              "target": "Package",
+              "version": "[3.2.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
