@@ -1,31 +1,60 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 60px;
+  background-color: black;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.card {
+  border-radius: 8px;
+  background-color: black;
+  color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.card-img-top {
+  height: 300px;
+  object-fit: cover;
 }
+
+footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Custom styling for the search button */
+.search-btn {
+  background-color: black;  
+  color: white;               
+  font-size: 16px;            /* Font size */
+  padding: 8px 20px;          /* Padding */
+  border: 2px solid whitesmoke;  /* Border style */
+  border-radius: 5px;         /* Rounded corners */
+  text-transform: uppercase;  /* Uppercase text */
+}
+
+/* Optional: Hover effect */
+.search-btn:hover {
+  background-color: #45a049;  
+  border-color: #45a049;       
+}
+
+/* Custom styling for the button */
+.custom-btn {
+  background-color: grey; /* Custom green */
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px; /* Optional: rounded corners */
+  text-transform: uppercase; /* Uppercase text */
+}
+
+/* Optional: Hover effect */
+.custom-btn:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+
+
+
+
