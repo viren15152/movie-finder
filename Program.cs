@@ -1,29 +1,35 @@
+using dotenv.net;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MovieFinder.Models; // ✅ Import models
+
+DotEnv.Load(); // Load environment variables from .env
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Load database connection string from .env
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new Exception("Database connection string is missing! Ensure DB_CONNECTION is set in .env.");
+}
+
+// Register Database Context with PostgreSQL
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
+// Middleware
+app.UseStaticFiles();
 app.UseRouting();
-
 app.UseAuthorization();
+app.MapControllers();
 
-app.MapStaticAssets();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
+// Redirect root URL to Movie Search page
+app.MapGet("/", () => Results.Redirect("/Movie/Search"));
 
 app.Run();
+
