@@ -1,9 +1,10 @@
 using dotenv.net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MovieFinder.Models; // ✅ Import models
+using MovieFinder.Data;  // ✅ Ensure correct namespace
+using MovieFinder.Services; // ✅ Ensure correct namespace
 
-DotEnv.Load(); // Load environment variables from .env
+DotEnv.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,11 +19,13 @@ if (string.IsNullOrEmpty(connectionString))
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
+// ✅ Register TMDb Service
+builder.Services.AddSingleton<TmdbService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Middleware
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
@@ -32,4 +35,6 @@ app.MapControllers();
 app.MapGet("/", () => Results.Redirect("/Movie/Search"));
 
 app.Run();
+
+
 

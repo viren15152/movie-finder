@@ -1,0 +1,44 @@
+@model List<Dictionary<string, object>>
+
+<div class="container">
+    <h2>Search for a Movie</h2>
+    <form method="get" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="query" class="form-control" placeholder="Enter movie name...">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                var title = item["title"]?.ToString() ?? "Unknown Title";
+                var year = item["year"]?.ToString() ?? "Unknown Year";
+                var imageUrl = item["image"]?.ToString() ?? "https://via.placeholder.com/100";
+                var tmdbId = item["tmdbId"]?.ToString() ?? "N/A";
+
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="@imageUrl" class="card-img-top" alt="@title">
+                        <div class="card-body">
+                            <h5 class="card-title">@title (@year)</h5>
+                            <form asp-action="SaveMovie" method="post">
+                                <input type="hidden" name="Title" value="@title">
+                                <input type="hidden" name="TmdbId" value="@tmdbId">
+                                <input type="hidden" name="PosterUrl" value="@imageUrl">
+                                <button type="submit" class="btn btn-sm btn-success">Save to Favorites</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No results found.</p>
+    }
+</div>
+>
