@@ -1,20 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
-using MovieFinder.Services;  
-using MovieFinder.Data;      
-using MovieFinder.Models;    
-using System.Text.Json;
+using MovieFinder.Services;
+using MovieFinder.Data;
+using MovieFinder.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MovieFinder.Controllers
 {
-    [Route("Movie")]  // 
+    [Route("Movie")]
     public class MovieController : Controller
     {
         private readonly TmdbService _tmdbService;
         private readonly AppDbContext _context;
 
+        // Constructor
         public MovieController(TmdbService tmdbService, AppDbContext context)
         {
             _tmdbService = tmdbService;
@@ -31,16 +31,21 @@ namespace MovieFinder.Controllers
             }
 
             var response = await _tmdbService.SearchMovie(query);
-            using var jsonDoc = JsonDocument.Parse(response);
+            using var jsonDoc = System.Text.Json.JsonDocument.Parse(response);
             var root = jsonDoc.RootElement;
 
             var results = root.GetProperty("results").EnumerateArray()
-                .Select(movie => new Dictionary<string, object>
+                .Select(movie =>
                 {
-                    { "title", movie.GetProperty("title").GetString() },
-                    { "year", movie.TryGetProperty("release_date", out var date) ? date.GetString()?.Split('-')[0] : "N/A" },
-                    { "image", movie.TryGetProperty("poster_path", out var poster) ? $"https://image.tmdb.org/t/p/w500{poster.GetString()}" : "https://via.placeholder.com/100" },
-                    { "tmdbId", movie.GetProperty("id").GetInt32().ToString() }
+                    var movieDetails = new Dictionary<string, object>
+                    {
+                        { "title", movie.GetProperty("title").GetString() ?? "Unknown Title" },  // Default to "Unknown Title" if null
+                        { "year", movie.TryGetProperty("release_date", out var date) ? date.GetString()?.Split('-')[0] ?? "N/A" : "N/A" },  // Default to "N/A" if null
+                        { "image", movie.TryGetProperty("poster_path", out var poster) ? $"https://image.tmdb.org/t/p/w500{poster.GetString()}" : "https://via.placeholder.com/100" },  // Default to placeholder if null
+                        { "tmdbId", movie.GetProperty("id").GetInt32().ToString() ?? "Unknown ID" }  // Default to "Unknown ID" if null
+                    };
+
+                    return movieDetails;
                 }).ToList();
 
             return View(results);
@@ -70,7 +75,7 @@ namespace MovieFinder.Controllers
             return View(movies);
         }
 
-        // 🎬 ✅ Remove Movie from Favorites (POST)
+        // 🎬 ✅ Remove a Movie from Favorites (POST)
         [HttpPost("RemoveMovie")]
         public IActionResult RemoveMovie(string tmdbId)
         {
@@ -84,6 +89,9 @@ namespace MovieFinder.Controllers
         }
     }
 }
+
+
+
 
 
 
