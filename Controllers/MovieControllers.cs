@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using MovieFinder.Services;  // ✅ Corrected namespace
-using MovieFinder.Data;      // ✅ Corrected namespace
-using MovieFinder.Models;    // ✅ Corrected namespace
+using MovieFinder.Services;  
+using MovieFinder.Data;      
+using MovieFinder.Models;    
 using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace MovieFinder.Controllers
 {
+    [Route("Movie")]  // 
     public class MovieController : Controller
     {
         private readonly TmdbService _tmdbService;
@@ -20,6 +21,8 @@ namespace MovieFinder.Controllers
             _context = context;
         }
 
+        // 🎬 ✅ Movie Search (GET)
+        [HttpGet("Search")]
         public async Task<IActionResult> Search(string query)
         {
             if (string.IsNullOrWhiteSpace(query))
@@ -42,7 +45,32 @@ namespace MovieFinder.Controllers
 
             return View(results);
         }
+
+        // ⭐ ✅ Save a Movie to Favorites (POST)
+        [HttpPost("SaveMovie")]
+        public IActionResult SaveMovie(Movie movie)
+        {
+            if (movie != null && !string.IsNullOrWhiteSpace(movie.TmdbId))
+            {
+                var existingMovie = _context.Movies.FirstOrDefault(m => m.TmdbId == movie.TmdbId);
+                if (existingMovie == null)
+                {
+                    _context.Movies.Add(movie);
+                    _context.SaveChanges();
+                }
+            }
+            return RedirectToAction("Favorites");
+        }
+
+        // ❤️ ✅ Display Favorite Movies (GET)
+        [HttpGet("Favorites")]
+        public IActionResult Favorites()
+        {
+            var movies = _context.Movies.ToList();
+            return View(movies);
+        }
     }
 }
+
 
 
