@@ -1,8 +1,8 @@
 using dotenv.net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MovieFinder.Data;  // ✅ Ensure correct namespace
-using MovieFinder.Services; // ✅ Ensure correct namespace
+using MovieFinder.Data;  
+using MovieFinder.Services; 
 
 DotEnv.Load();
 
@@ -19,7 +19,6 @@ if (string.IsNullOrEmpty(connectionString))
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-// ✅ Register TMDb Service
 builder.Services.AddSingleton<TmdbService>();
 
 builder.Services.AddControllersWithViews();
