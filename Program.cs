@@ -4,15 +4,19 @@ using Microsoft.Extensions.DependencyInjection;
 using MovieFinder.Data;  
 using MovieFinder.Services; 
 
-DotEnv.Load();
+// Only load .env file in local development
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+{
+    DotEnv.Load();
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Load database connection string from .env
+// Load database connection string from environment variable (Render will handle this)
 var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
 if (string.IsNullOrEmpty(connectionString))
 {
-    throw new Exception("Database connection string is missing! Ensure DB_CONNECTION is set in .env.");
+    throw new Exception("Database connection string is missing! Ensure DB_CONNECTION is set in environment variables.");
 }
 
 // Register Database Context with PostgreSQL
@@ -34,6 +38,7 @@ app.MapControllers();
 app.MapGet("/", () => Results.Redirect("/Movie/Search"));
 
 app.Run();
+
 
 
 
