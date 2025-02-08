@@ -1,6 +1,5 @@
 # Movie-Finder
 
-![alt text](<wwwroot/images/Screenshot 2025-02-06 at 23.54.10.png>)
 ![alt text](<wwwroot/images/Screenshot 2025-02-07 at 14.29.42.png>)
 ![alt text](<wwwroot/images/Screenshot 2025-02-07 at 14.11.34.png>)
 
